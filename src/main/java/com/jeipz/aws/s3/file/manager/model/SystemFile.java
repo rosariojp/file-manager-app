@@ -26,7 +26,7 @@ public class SystemFile {
     @Column(name = "bucket_name", nullable = false)
     private String bucketName;
 
-    @Column(name = "file_name", nullable = false)
+    @Column(name = "file_name", nullable = false, unique = true)
     private String fileName;
 
     @Column(name = "file_size")

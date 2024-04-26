@@ -6,6 +6,7 @@ import com.jeipz.aws.s3.file.manager.model.SystemFile;
 import com.jeipz.aws.s3.file.manager.model.response.PageResponse;
 import com.jeipz.aws.s3.file.manager.model.response.SystemFileDownloadResponse;
 import com.jeipz.aws.s3.file.manager.repository.SystemFileRepository;
+import com.jeipz.aws.s3.file.manager.validation.SystemFileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,13 +28,16 @@ public class SystemFileServiceImpl implements SystemFileService {
 
     private final AmazonS3Service amazonS3Service;
 
+    private final SystemFileValidator systemFileValidator;
+
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
     public SystemFileServiceImpl(AmazonS3Service amazonS3Service,
-                                 SystemFileRepository systemFileRepository) {
+                                 SystemFileRepository systemFileRepository, SystemFileValidator systemFileValidator) {
         this.systemFileRepository = systemFileRepository;
         this.amazonS3Service = amazonS3Service;
+        this.systemFileValidator = systemFileValidator;
     }
 
     @Override
@@ -69,6 +73,8 @@ public class SystemFileServiceImpl implements SystemFileService {
         }
 
         String fileName = file.getOriginalFilename();
+        systemFileValidator.validateSystemFileName(fileName);
+
         String contentType = file.getContentType();
         long fileSize = file.getSize();
 
