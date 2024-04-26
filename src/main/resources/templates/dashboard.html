@@ -61,7 +61,7 @@
             <tr>
                 <th scope="row" th:text="${rowIndex}"></th>
                 <td th:text="${file.fileName}"></td>
-                <td th:text="${file.description}"></td>
+                <td th:text="${file.description != null and file.description != '' ? file.description : '-'}"></td>
                 <td th:text="${T(com.jeipz.aws.s3.file.manager.utils.FileSizeFormatter).formatFileSize(file.fileSize)}"></td>
                 <td th:text="${#temporals.format(file.uploadDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
