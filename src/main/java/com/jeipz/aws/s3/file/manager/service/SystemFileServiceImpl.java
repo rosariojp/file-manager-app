@@ -2,6 +2,7 @@ package com.jeipz.aws.s3.file.manager.service;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.jeipz.aws.s3.file.manager.exception.FileRequiredException;
 import com.jeipz.aws.s3.file.manager.exception.SystemFileNotFoundException;
 import com.jeipz.aws.s3.file.manager.model.SystemFile;
 import com.jeipz.aws.s3.file.manager.model.response.PageResponse;
@@ -69,7 +70,7 @@ public class SystemFileServiceImpl implements SystemFileService {
     public SystemFile upload(String description, MultipartFile file) throws IOException {
 
         if (file.isEmpty()) {
-            throw new IllegalStateException("Cannot upload empty file...");
+            throw new FileRequiredException();
         }
 
         String fileName = file.getOriginalFilename();
