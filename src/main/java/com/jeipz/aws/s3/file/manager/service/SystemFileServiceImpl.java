@@ -2,12 +2,12 @@ package com.jeipz.aws.s3.file.manager.service;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.jeipz.aws.s3.file.manager.exception.SystemFileNotFoundException;
 import com.jeipz.aws.s3.file.manager.model.SystemFile;
 import com.jeipz.aws.s3.file.manager.model.response.PageResponse;
 import com.jeipz.aws.s3.file.manager.model.response.SystemFileDownloadResponse;
 import com.jeipz.aws.s3.file.manager.repository.SystemFileRepository;
 import com.jeipz.aws.s3.file.manager.validation.SystemFileValidator;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -59,7 +59,7 @@ public class SystemFileServiceImpl implements SystemFileService {
     @Override
     public void delete(UUID id) throws SdkClientException {
         SystemFile systemFile = systemFileRepository.findById(id)
-                        .orElseThrow(EntityNotFoundException::new);
+                        .orElseThrow(SystemFileNotFoundException::new);
         systemFileRepository.delete(systemFile);
         amazonS3Service.deleteFromS3(systemFile.getBucketName(), systemFile.getFileName());
     }
@@ -100,7 +100,7 @@ public class SystemFileServiceImpl implements SystemFileService {
     @Override
     public SystemFileDownloadResponse download(UUID id) throws IOException {
         SystemFile systemFile = systemFileRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(SystemFileNotFoundException::new);
 
         byte[] fileData = amazonS3Service.downloadFromS3(systemFile.getBucketName(), systemFile.getFileName());
         return new SystemFileDownloadResponse(systemFile.getFileName(), fileData);
