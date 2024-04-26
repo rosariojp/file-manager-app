@@ -29,7 +29,7 @@ public class FileManagerApplication {
     @GetMapping("/dashboard")
     public String dashboard(Model model,
                             @RequestParam(value = "page", defaultValue = "0") int page,
-                            @RequestParam(value = "size", defaultValue = "7") int size) {
+                            @RequestParam(value = "size", defaultValue = "5") int size) {
         PageResponse<SystemFile> pageResponse = systemFileService.getFiles(page, size);
         model.addAttribute("pageResponse", pageResponse);
         return "dashboard";
