@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spring Boot AWS S3 Example</title>
+    <title>File Manager App</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -54,8 +54,8 @@
                 <th scope="row" th:text="${rowIndex}"></th>
                 <td th:text="${file.fileName}"></td>
                 <td th:text="${file.description}"></td>
-                <td th:text="${file.fileSize}"></td>
-                <td th:text="${file.uploadDate}"></td>
+                <td th:text="${T(com.jeipz.aws.s3.file.manager.utils.FileSizeFormatter).formatFileSize(file.fileSize)}"></td>
+                <td th:text="${#temporals.format(file.uploadDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
                     <a th:href="@{'/fma/download/'+${file.id}}">
                         <button class="btn btn-outline-primary">Download</button>
@@ -161,6 +161,14 @@
             uploadButton.innerHTML = 'Upload';
             uploadButton.disabled = false;
         });
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 </script>
 
