@@ -1,25 +1,5 @@
-server:
-  port: 8081
-
-# Amazon Web Service Settings (values were stored in environment variables)
-aws:
-  s3:
-    bucket: ${AWS_S3_BUCKET}
-  access-key: ${AWS_ACCESS_KEY}
-  secret-key: ${AWS_SECRET_KEY}
-  region: ${AWS_REGION}
-
 spring:
   application:
-    name: 'File-Manager-Application'
-  datasource:
-    url: jdbc:mysql://localhost:3306/file-manager-app
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-
+    name: File-Manager-Application
+  profiles:
+    active: dev
