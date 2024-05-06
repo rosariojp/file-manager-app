@@ -5,9 +5,7 @@ import java.text.DecimalFormat;
 public class FileSizeFormatter {
 
     public static String formatFileSize(long size) {
-        if (size <= 0) {
-            return "0 B";
-        }
+        if (size <= 0) return "0 B";
         final String[] units = { "B", "KB", "MB", "GB", "TB" };
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.#")
