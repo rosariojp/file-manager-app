@@ -44,7 +44,7 @@ public class SystemFileServiceImpl implements SystemFileService {
     @Override
     public PageResponse<SystemFile> getFiles(int page, int size) {
         String field = "uploadDate";
-        Sort sort = Sort.by(Sort.Order.asc(field));
+        Sort sort = Sort.by(Sort.Order.desc(field));
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<SystemFile> pages = systemFileRepository.findAll(pageable);
         return new PageResponse<>(
