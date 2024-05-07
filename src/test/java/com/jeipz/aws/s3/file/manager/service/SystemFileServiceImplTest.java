@@ -132,6 +132,9 @@ class SystemFileServiceImplTest {
                 .uploadDate(LocalDateTime.now())
                 .build();
 
+        systemFile.setFileSize(file.getSize());
+        systemFile.setContentType(file.getContentType());
+
         doNothing().when(systemFileValidator).validateSystemFileName(file.getOriginalFilename());
         when(systemFileRepository.save(any(SystemFile.class))).thenReturn(systemFile);
         doNothing()
@@ -142,9 +145,13 @@ class SystemFileServiceImplTest {
         SystemFile uploadedSystemFile = systemFileService.upload(DESCRIPTION, file);
 
         assertAll("Validate saved system file details",
+                () -> assertEquals(systemFile.getId(), uploadedSystemFile.getId()),
                 () -> assertEquals(systemFile.getBucketName(), uploadedSystemFile.getBucketName()),
                 () -> assertEquals(systemFile.getFileName(), uploadedSystemFile.getFileName()),
-                () -> assertEquals(systemFile.getUploadDate(), uploadedSystemFile.getUploadDate()));
+                () -> assertEquals(systemFile.getUploadDate(), uploadedSystemFile.getUploadDate()),
+                () -> assertEquals(systemFile.getDescription(), uploadedSystemFile.getDescription()),
+                () -> assertEquals(systemFile.getFileSize(), uploadedSystemFile.getFileSize()),
+                () -> assertEquals(systemFile.getContentType(), uploadedSystemFile.getContentType()));
 
         verify(systemFileValidator, times(1)).validateSystemFileName(file.getOriginalFilename());
         verify(systemFileRepository, times(1)).save(any(SystemFile.class));
