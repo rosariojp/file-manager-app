@@ -26,7 +26,7 @@ class SystemFileExceptionHandlerTest {
     private SystemFileAlreadyExistsException systemFileAlreadyExistsException;
 
     @Test
-    void handleSystemFileNotFoundException_Test() {
+    public void handleSystemFileNotFoundException_Test() {
         ResponseEntity<ExceptionResponse> response =
                 systemFileExceptionHandler.handleSystemFileNotFoundException(systemFileNotFoundException);
 
@@ -37,7 +37,7 @@ class SystemFileExceptionHandlerTest {
     }
 
     @Test
-    void handleSystemFileAlreadyExistsException_Test() {
+    public void handleSystemFileAlreadyExistsException_Test() {
         ResponseEntity<ExceptionResponse> response =
                 systemFileExceptionHandler.handleSystemFileAlreadyExistsException(systemFileAlreadyExistsException);
 
