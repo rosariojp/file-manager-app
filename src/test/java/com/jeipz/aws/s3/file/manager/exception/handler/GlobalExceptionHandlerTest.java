@@ -22,7 +22,7 @@ class GlobalExceptionHandlerTest {
     private FileRequiredException fileRequiredException;
 
     @Test
-    void handleFileRequiredException_Test() {
+    public void handleFileRequiredException_Test() {
         ResponseEntity<ExceptionResponse> response =
                 globalExceptionHandler.handleFileRequiredException(fileRequiredException);
 
