@@ -101,7 +101,7 @@ class SystemFileControllerTest {
     }
 
     @Test
-    public void fileUpload() throws Exception {
+    public void fileUpload_Successful() throws Exception {
         MockPart description = new MockPart("description", DESCRIPTION.getBytes(StandardCharsets.UTF_8));
         MockPart file = new MockPart("file", FILE_NAME, FILE_NAME.getBytes());
         file.getHeaders().setContentType(MediaType.TEXT_PLAIN);
@@ -129,7 +129,7 @@ class SystemFileControllerTest {
     }
 
     @Test
-    public void fileDownload() throws Exception {
+    public void fileDownload_Successful() throws Exception {
         UUID id = UUID.randomUUID();
         SystemFileDownloadResponse systemFileDownloadResponse =
                 new SystemFileDownloadResponse(FILE_NAME, FILE_NAME.getBytes());
