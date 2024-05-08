@@ -35,7 +35,7 @@ public class FileManagerApplication {
         return "dashboard";
     }
 
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public String upload(@RequestPart(value = "description", required = false) String description,
                          @RequestPart("file") MultipartFile file) throws IOException {
         systemFileService.upload(description, file);
