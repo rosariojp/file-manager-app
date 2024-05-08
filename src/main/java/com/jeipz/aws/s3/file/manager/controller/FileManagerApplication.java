@@ -36,8 +36,8 @@ public class FileManagerApplication {
     }
 
     @PostMapping("upload")
-    public String upload(@RequestParam("description") String description,
-                         @RequestParam("file") MultipartFile file) throws IOException {
+    public String upload(@RequestPart(value = "description", required = false) String description,
+                         @RequestPart("file") MultipartFile file) throws IOException {
         systemFileService.upload(description, file);
         return "redirect:/fma/dashboard";
     }
